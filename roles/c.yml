@@ -1,0 +1,40 @@
+---
+- name: running shell script with cron job
+  hosts: localhost
+  tasks: 
+  - name: running shell script with cron job
+    cron:
+      name: "run tomcat"
+      user: siddharth
+      minute: "{{ansible_date_time.minute| int + 1 }}"
+      hour: "{{ansible_date_time.hour}}"
+      job: "ps -ef | grep tomcat > /tmp/sid.txt"
+    become: yes
+  
+  - name: Sleep for 60 seconds and continue with play
+    wait_for:
+      timeout: 60
+    delegate_to: localhost
+
+  - name: debug the output
+    debug: 
+      msg: "{{ lookup('file', '/tmp/sid.txt') }}"
+
+  - name: remove out file
+    file:
+      path: /tmp/sid.txt
+      state: absent
+    become: yes
+    notify: 
+       - deleting cron job
+  
+  handlers:
+  
+  - name: deleting cron job
+    cron:
+      name: "run tomcat"
+      user: siddharth
+      state: absent
+    become: yes
+
+  

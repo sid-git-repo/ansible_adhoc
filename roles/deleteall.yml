@@ -1,0 +1,15 @@
+---
+- name: delete running conatiner
+  hosts: localhost
+
+
+  tasks: 
+  -  name: delete running conatiner
+     shell:  docker rm -f $(docker container ls -a -q)
+     become: yes
+     register: stdout
+
+#docker rmi $(docker images -q) 
+  -  name: debug result
+     debug:
+       msg: "{{stdout}}"

@@ -1,0 +1,20 @@
+---
+- name: starting tomcat
+  hosts: localhost
+
+
+  tasks:
+    name: start tomcat
+    shell: /opt/init.d/tomcat start
+    register: start_log
+
+
+
+    name: stop tomcat
+    shell: /opt/init.d/tomcat stop
+    register: stop_log
+    when: 
+      ansible_check_mode: true
+
+
+...

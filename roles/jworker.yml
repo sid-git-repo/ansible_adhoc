@@ -1,0 +1,14 @@
+
+FROM  ubuntu
+MAINTAINER "siddharthsingh2910@gmail.com"
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt  update
+RUN apt  install git -y
+RUN apt install ssh -y
+RUN service ssh start
+RUN apt install -y openjdk-8-jdk
+Env JAVA_HOME /usr
+ADD agent.jar /
+#RUN java -jar agent.jar -jnlpUrl http://192.168.0.106:8080/jenkins/computer/LDocker/jenkins-agent.jnlp -secret 75a0b5496457c7921b7e1af19fbd458890938201102e8d1c09d65952c8f9f07a -workDir "/"
+#RUN echo 75a0b5496457c7921b7e1af19fbd458890938201102e8d1c09d65952c8f9f07a > secret-file
+#RUN java -jar agent.jar -jnlpUrl http://192.168.0.106:8080/jenkins/computer/LDocker/jenkins-agent.jnlp -secret @secret-file -workDir "/"

@@ -1,0 +1,10 @@
+---
+- name: custom module check
+  hosts: localhost
+  tasks: 
+  - name: custom check
+    adhocuptime:
+    register: result
+    become: yes
+    
+  - debug: var=result

@@ -1,0 +1,26 @@
+# checkdiskspaceall.yml
+---
+- hosts: localhost
+  #vars_files: vault.yml
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  tasks:
+     - name: Collect only facts about hardware
+       setup:
+         gather_subset:
+           - 'hardware'
+
+     - name: Test for available disk space
+       setup: filter=ansible_mounts
+       
+     - name: Ensure that free space on the tested volume is greater than 15%
+       assert:
+         that:
+           - mount.size_available > mount.size_total|float * 0.05
+         msg: Disk space has reached 95% threshold
+       vars:
+         mount: "{{ ansible_mounts | selectattr('mount','equalto',item.mount) | list | first }}"
+       with_items:
+         - "{{ ansible_mounts }}"
+       

@@ -1,0 +1,12 @@
+---
+- name: ping
+  hosts: ubuntu
+  
+  gather_facts: true
+
+  tasks:
+  -  name: ping host
+     ping: 
+
+
+...

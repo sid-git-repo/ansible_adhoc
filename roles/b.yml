@@ -1,0 +1,44 @@
+---
+- name: testing
+  hosts: localhost
+  gather_facts: yes
+
+
+  tasks: 
+     -  name: host details
+        vars:
+          var: ah-1132308-001.sdi.corp.bofa.com
+        debug:
+          msg: "{{ var.split('-')[0:2]|join('-')}}"
+     -  name: host details
+        vars:
+          host: hostname.split('-')[0:2]|join('-')
+        debug:
+          msg: "{{ host}}"
+
+     -  name: timestamp
+        vars:
+          date: "{{ lookup('pipe' , 'hostname') }}"
+        debug: msg="{{ date.split('-')[0:2]|join('-')}}"
+        register: hostdetails
+     
+     -  name: shell check
+        shell: hostname -s | awk -F"-" '{print $1 "-" $2}'
+        register: stdout
+
+     -  name: creating file
+        file: 
+          path: /home/siddharth/sid_"{{hostdetails.msg}}"
+          state: touch
+          owner: siddharth
+          group: siddharth
+          mode: '0644'
+
+        
+
+  # -  name: hostdetails
+  #      vars:
+  #        host: hostname.split('-')[:2]|join('-')
+  #      debug: msg="{{ host}}"
+  #      register: hostdetails
+

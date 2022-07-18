@@ -1,0 +1,68 @@
+---
+- name: find alternative
+  hosts: localhost
+
+
+  tasks: 
+  -  name: find testing
+     find:
+        path: /home/siddharth/Ansible_check
+        age: -7d
+        age_stamp: mtime
+      #  depth:
+      #  contains:
+        file_type: directory
+      #  excludes:
+      #  hidden:
+      #  follow:
+      #  patterns:
+      #  size:
+      #  use_regex:
+      #  recurce:
+     register: output
+
+  -  name: find testing
+     find:
+        path: /home/siddharth/Ansible_check
+        age: 7d
+        age_stamp: mtime
+      #  depth:
+      #  contains:
+        file_type: file
+      #  excludes:
+      #  hidden:
+      #  follow:
+      #  patterns:
+      #  size:
+      #  use_regex:
+      #  recurce:
+     register: output1
+
+  # -  name: Delete the files matching
+  #    file:
+  #      path: "{{item.path}}"
+  #      state: absent
+  #    with_items: "{{ output.files }}"
+
+  -  name: output
+     debug:
+       #var: "{{cdo_var1[:-3]}}"
+        msg: "{{cdo_var1[:3]}}"
+       
+     vars:
+       cdo_sort: mtime
+       cdo_reverse: false
+       #cdo_var1: "{{output.files|sorted(reverse=false, attribute=mtime)|map(attribute='path')| list, '')}}"
+       cdo_var1: "{{output.files | sort(attribute='mtime') | map(attribute='path') | list}}"
+
+  -  name: output1
+     debug: 
+       #var: "{{cdo_var1[:-3]}}"
+        msg: "{{cdo_var1}}"
+       
+     vars:
+       cdo_sort: mtime
+       cdo_reverse: false
+       #cdo_var1: "{{output.files|sorted(reverse=false, attribute=mtime)|map(attribute='path')| list, '')}}"
+       cdo_var1: "{{output1.files | sort(attribute='mtime') | map(attribute='path') | list}}"
+

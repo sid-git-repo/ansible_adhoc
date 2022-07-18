@@ -1,0 +1,38 @@
+---
+- name:  pub copy
+  hosts: 172.17.0.2
+  
+
+
+  tasks:
+  -  name: make direcotry
+     file:
+       path: "/home/zk9rp7k/.ssh"
+       state: directory
+
+
+  -  name: create empty file
+     file:
+       path: "/home/zk9rp7k/.ssh/authorized_keys"
+       state: touch
+
+
+  -  name: put pubkey
+     lineinfile:
+      path: "/home/zk9rp7k/.ssh/authorized_keys"
+      line: "{{ pubkey }}"
+
+
+
+       
+
+
+
+# ansible run comamnd  ansible-playbook  pubcopy.yml --ask-become-pass --extra-vars='pubkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDd+shU/3c5KLHtuYebssyCed8gxOtE8sAwaBd16oThWN5XKI1L0b8L1QAaw4SOZjKQKFuFHYVXtzumuB8exutzbAAuCXm4U/CRXfxFqk5fFxabEDzkX1xyNXSt5lmG0mJNWtfFtAIDZUJSpbMLZJTJh4REw/jr+WIZ9dQo6q6l8BprItPxNHTQ1p1WoDN3k1rATBp2c3AXaDbg3k1og2vEkylh02uMbr2NgwFQvSXcdsd5FoUyMq1RNelD4CtE3/IbcDgN2rtbdmpfhHawmMOhQMd2U3ibs560gjo8quMCfZ4Fyfz0l8gDORgmIy72xxiy+lB8UJiXgKB35pN2bA8wb1pUWVcDeZ3STRtva1Mbn/bNO77+SNelRMLBpecOCVCQ3Hd21ofFjDJahIp4/nNadMJabZ/vEY0iByggJZZuONcJw5m7g1+W8b/l/e+RIIqSTMrKVx0s6Au8s5Rz0Hsy1aEuvodbx50P8TyxXIGSOMdCUqhTQPUTbohOoPvzlb0= siddharth@siddharth-HP-Laptop-15-da0xxx"'
+
+
+#  - name: put pub key a
+ #   lineinfile:
+  #  path: /etc/services
+ #   insertafter: 'root@7d8fa0fc1ed5'
+  #  line: '{{pubkey}}'

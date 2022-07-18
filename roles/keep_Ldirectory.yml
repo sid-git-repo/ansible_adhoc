@@ -1,0 +1,46 @@
+---
+- name: find advance
+  hosts: localhost
+
+
+  tasks: 
+  -  name: find testing
+     find:
+        paths: /home/siddharth/gamutkart2
+        file_type: directory
+        age: 1W
+     register: results
+
+  -  name: debug
+#     debug: msg"{{ out.stdout_lines|join('\n')  }}"
+     debug: 
+       var: results.files|map(attribute='path')|list
+
+  - name: Recursively remove directory
+    file:
+    path: /etc/foo
+    state: absent
+
+
+
+
+
+
+
+  # - name: Get files in a folder
+  #   find:
+  #     paths: "/home/siddharth/pipeline_2021/"
+  #   register: out
+
+  # - name: Get latest file
+  #   set_fact:
+  #     latest_file: "{{ out.files | sort(attribute='mtime',reverse=true) | three }}"
+
+     
+
+
+  # -  name: Ansible remove file glob
+  #     file:
+  #       path: "{{ item.path }}"
+  #       state: absent
+  #     with_items: "{{ files_to_delete.files }}"

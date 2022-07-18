@@ -1,0 +1,56 @@
+---
+- name: testing
+  hosts: localhost
+
+
+  tasks: 
+  # -  name: copy testing
+  #    copy:
+  #      src: /home/siddharth/pipeline_2021
+  #      dest: /home/siddharth/rsync
+  #     #  owner: foo
+  #     #  group: foo
+  #     #  mode: '0644'
+
+    -  name: copy testing
+       copy:
+          src: /home/siddharth/pipeline_2021/copy/elasticsearch.yml
+          dest: /home/siddharth/pipeline_2021/copy/elasticsearch.yml.disable
+          owner: root
+          group: root
+          mode: '0644'
+          backup: no
+       become: yes
+
+    -  name: file disabled
+       file:
+          state: absent
+          path: /home/siddharth/pipeline_2021/copy/elasticsearch.yml
+       become: yes
+
+       
+
+
+    # -  name: creating file
+    #    vars:
+    #      date: "{{ lookup('pipe' , 'date +%Y-%m-%d-%H-%M-%S') }}"
+    #    file: 
+    #      path: "/home/siddharth/sid_{{date}}"
+    #      state: touch
+    #      owner: siddharth
+    #      group: siddharth
+    #      mode: '0644'
+
+    # -  name: timestamp
+    #    vars:
+    #      date: "{{ lookup('pipe' , 'df -k .') }}"
+    #    debug: msg="{{ date}}"
+    #    register: tstamp
+
+    # -  name: timestamp
+    #    vars:
+    #      date: "{{ lookup('pipe' , 'ls -lrt /home/siddharth') }}"
+    #    debug: msg="{{ date}}"
+    #    register: tstamp
+    
+     

@@ -1,0 +1,14 @@
+---
+- name: pull nginx image
+  hosts: localhost
+  gather_facts: true
+  
+  tasks:
+  -  name: docker pull nginx
+     shell:  docker pull nginx
+     register: stdout
+     become: yes
+
+
+  -  name: debug nginx pull 
+     debug: msg "{{stdout}}"

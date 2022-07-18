@@ -1,0 +1,19 @@
+---
+- name: delete  everything
+  hosts: localhost
+
+
+  tasks: 
+  -  name: delete  every thing
+     shell: docker system prune -a 
+     become: yes
+     register: stdout
+
+
+  -  name: debug result
+     debug:
+       msg: "{{stdout}}"
+
+
+
+

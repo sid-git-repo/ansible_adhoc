@@ -1,0 +1,14 @@
+---
+- name: cronjob test
+  hosts: localhost
+
+
+  tasks:
+  -  name: cronjob test
+     cron:
+       name: "start tomcat"
+       user: siddharth
+       minute: "00"
+       hour: "8"
+       job: "/opt/tomcat/bin/startup.sh"
+     become: yes

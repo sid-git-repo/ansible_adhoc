@@ -1,0 +1,16 @@
+---
+- name: rsync alternative
+  hosts: localhost
+  tasks: 
+  - name: rsync testing
+    synchronize:
+      src: /home/siddharth/c1/
+      dest: /home/siddharth/c2/
+      owner: yes
+      group: yes
+    become: yes
+...
+    
+      
+  
+        
